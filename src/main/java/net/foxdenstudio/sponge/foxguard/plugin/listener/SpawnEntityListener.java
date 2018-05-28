@@ -40,6 +40,7 @@ import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.event.EventListener;
+import org.spongepowered.api.event.cause.EventContextKeys;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.chat.ChatTypes;
@@ -69,6 +70,8 @@ public class SpawnEntityListener implements EventListener<SpawnEntityEvent> {
             user = event.getCause().first(Player.class).get();
         } else if (event.getCause().containsType(User.class)) {
             user = event.getCause().first(User.class).get();
+        } else if (event.getContext().get(EventContextKeys.OWNER).isPresent()){
+            user = event.getContext().get(EventContextKeys.OWNER).get();
         } else {
             user = null;
         }
